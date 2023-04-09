@@ -1,19 +1,17 @@
 FROM alpine:3.16
 
-RUN 	apk update && apk upgrade && \
+RUN	apk update && apk upgrade && \
 	apk add --no-cache nginx openssl && \
-	cd var/www/ && \
-	mkdir html && cd /&& \
+	cd var/www/ && mkdir html && cd / &&\
 	mkdir /etc/nginx/certs && \
 	touch /etc/nginx/certs/default.key /etc/nginx/certs/default.crt && \
-	chmod 777 /etc/nginx/certs/default.key /etc/nginx/certs/default.crt && \
 	openssl req -x509 -nodes -days 365 \
-		-subj  "/C=FR/ST=Paris/O=42/CN=adamiens.42.fr" \
+		-subj "/C=FR/ST=PARIS/O=42/CN=adamiens.42.fr" \
 		-newkey rsa:2048 -keyout /etc/nginx/certs/default.key \
 		-out /etc/nginx/certs/default.crt 2>/dev/null;
 
-COPY conf /etc/nginx/nginx.conf
-COPY index.html /var/www/html
+COPY	conf	/etc/nginx/nginx.conf
+COPY	index.html	/var/www/html
 
 EXPOSE 443:443
 EXPOSE 80:80
