@@ -1,7 +1,7 @@
 FROM alpine:3.16
 
 RUN	apk update && apk upgrade && \
-	apk add --no-cache nginx openssl && \
+	apk add --no-cache nginx fcgi openssl && \
 	cd var/www/ && mkdir html && cd / &&\
 	mkdir /etc/nginx/certs && \
 	touch /etc/nginx/certs/default.key /etc/nginx/certs/default.crt && \
