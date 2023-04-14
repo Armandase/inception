@@ -12,6 +12,7 @@ http{
 		ssl_protocols	TLSv1.2 TLSv1.3;
 
 		root		/var/www/html;
+
 		index		index.php index.html index.htm;
 
 		location / {
@@ -20,8 +21,8 @@ http{
 
 		location ~ \.php$ {
               		include	/etc/nginx/fastcgi.conf;
-			fastcgi_pass wordpress:9000;
-			fastcgi_index	index.php;
+			fastcgi_pass 127.0.0.1:9000;
+			fastcgi_index	/volume/index.php;
 		}
 
 		access_log	/var/log/nginx/access.log;

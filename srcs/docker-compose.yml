@@ -9,7 +9,9 @@ services:
                 ports:
                         - "443:443"
                 volumes:
-                        - /home/adamiens/data:/volume
+                        - data:/volume
+                depends_on:
+                        - wordpress
                 restart: always
         wordpress:
                 build:
@@ -21,5 +23,12 @@ services:
                         - "9000:9000"
                         - "3306:3306"
                 volumes:
-                        - /home/adamiens/data:/volume
+                        - data:/volume
                 restart: always
+volumes:
+  data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/adamiens/data'

@@ -2,6 +2,7 @@ FROM alpine:3.16
 
 RUN	apk update && apk upgrade && \
 	apk add --no-cache nginx fcgi openssl && \
+	mkdir /volume && \
 	cd var/www/ && mkdir html && cd / &&\
 	mkdir /etc/nginx/certs && \
 	touch /etc/nginx/certs/default.key /etc/nginx/certs/default.crt && \
@@ -11,7 +12,8 @@ RUN	apk update && apk upgrade && \
 		-out /etc/nginx/certs/default.crt 2>/dev/null;
 
 COPY	conf	/etc/nginx/nginx.conf
-COPY	index.html	/var/www/html
+#COPY	index.html /var/www/html
+#COPY	/home/adamiens/data/index.php /var/www/html
 
 EXPOSE 443:443
 EXPOSE 80:80

@@ -10,8 +10,8 @@ ${NAME} : build
 
 
 build:
-	docker build srcs/requirements/nginx -t nginx
 	docker build srcs/requirements/wordpress -t wordpress
+	docker build srcs/requirements/nginx -t nginx
 	docker-compose -f srcs/docker-compose.yml up --detach
 
 clean:
@@ -20,7 +20,10 @@ clean:
 	docker rmi -f ${IMAGES}
 	docker-compose -f srcs/docker-compose.yml down
 
+fclean:
+	docker rm -f `docker ps -a -q`
+	docker rmi -f `docker images -aq`
+
 re: clean all
 
 .PHONY: all clean re build
-
