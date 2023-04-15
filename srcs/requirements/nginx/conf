@@ -27,7 +27,7 @@ http{
 		location ~ \.php$ {
               		include	/etc/nginx/fastcgi.conf;
 			fastcgi_pass 127.0.0.1:9000;
-			fastcgi_index	/volume/wordpress/index.php;
+			#fastcgi_index	/volume/wordpress/index.php;
 		}
 
 		access_log	/var/log/nginx/access.log;

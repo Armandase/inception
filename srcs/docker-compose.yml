@@ -12,6 +12,8 @@ services:
                         - data:/volume
                 depends_on:
                         - wordpress
+                networks:
+                        - docker-network
                 restart: always
         wordpress:
                 build:
@@ -24,6 +26,8 @@ services:
                         - "3306:3306"
                 volumes:
                         - data:/volume
+                networks:
+                        - docker-network
                 restart: always
 volumes:
   data:
@@ -32,3 +36,6 @@ volumes:
       type: 'none'
       o: 'bind'
       device: '/home/adamiens/data'
+networks:
+        docker-network:
+                driver: bridge

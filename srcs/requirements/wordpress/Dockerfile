@@ -15,4 +15,4 @@ RUN	mkdir /volume && cd /volume && \
 EXPOSE 3306:3306
 EXPOSE 9000:9000
 
-CMD ["/bin/sh", "php-fpm"]
+CMD ["php-fpm8", "-F", "-R"]
