@@ -8,9 +8,11 @@ RUN	rc-update add lighttpd default
 RUN	mkdir /volume && cd /volume && \
 	wget http://wordpress.org/latest.tar.gz 2>/dev/null && \
 	tar -xzvf latest.tar.gz 1>/dev/null && \
-	cp -r wordpress/* . && rm -rf wordpress latest.tar.gz && \
+	rm -rf latest.tar.gz && \
 	chown -R lighttpd /volume && \
 	ln -s /volume/wordpress/ /var/www/localhost/htdocs/wordpress
 
 EXPOSE 3306:3306
 EXPOSE 9000:9000
+
+CMD ["/bin/sh", "php-fpm"]

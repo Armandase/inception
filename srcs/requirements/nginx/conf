@@ -11,9 +11,14 @@ http{
 		ssl_certificate_key	/etc/nginx/certs/default.key;
 		ssl_protocols	TLSv1.2 TLSv1.3;
 
-		root		/var/www/html;
+		#root		/var/www/html;
+		root		/volume/wordpress;
 
 		index		index.php index.html index.htm;
+
+		location /volume/wordpress {
+			index		index.php index.html index.htm;
+		}
 
 		location / {
 			try_files $uri $uri/ = 404;
@@ -22,7 +27,7 @@ http{
 		location ~ \.php$ {
               		include	/etc/nginx/fastcgi.conf;
 			fastcgi_pass 127.0.0.1:9000;
-			fastcgi_index	/volume/index.php;
+			fastcgi_index	/volume/wordpress/index.php;
 		}
 
 		access_log	/var/log/nginx/access.log;
