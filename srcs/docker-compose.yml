@@ -21,8 +21,6 @@ services:
                         dockerfile: requirements/wordpress/Dockerfile 
                 image: wordpress
                 container_name: wordpress_container
-                ports:
-                        - "9000:9000"
                 volumes:
                         - data:/volume
                 networks:
