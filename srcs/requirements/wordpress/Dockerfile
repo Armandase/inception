@@ -11,6 +11,7 @@ RUN	mkdir /volume && cd /volume && \
 	ln -s /volume/wordpress/ /var/www/localhost/htdocs/wordpress
 
 COPY	tools/php-fpm	/etc/php8/php-fpm.d/www.conf
+#COPY	tools/wp-config	/volume/wordpress/wp-config.php
 
 EXPOSE 9000:9000
 
