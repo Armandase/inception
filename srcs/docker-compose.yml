@@ -23,7 +23,6 @@ services:
                 container_name: wordpress_container
                 ports:
                         - "9000:9000"
-                        - "3306:3306"
                 volumes:
                         - data:/volume
                 networks:
