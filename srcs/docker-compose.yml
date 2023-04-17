@@ -9,7 +9,7 @@ services:
                 ports:
                         - "443:443"
                 volumes:
-                        - data:/volume
+                        - wordpress:/volume
                 depends_on:
                         - wordpress
                 networks:
@@ -22,17 +22,40 @@ services:
                 image: wordpress
                 container_name: wordpress_container
                 volumes:
-                        - data:/volume
+                        - wordpress:/volume
                 networks:
                         - docker-network
                 restart: always
+        mariadb:
+                build:
+                        context: .
+                        dockerfile: requirements/mariadb/Dockerfile 
+                image: mariadb
+                container_name: mariadb_container
+                ports:
+                        - "3306:3306"
+                volumes:
+                        - db:/volume
+                networks:
+                        - docker-network
+                environment:
+                        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+                        MYSQL_USER: ${MYSQL_USER}
+                        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+                restart: always
 volumes:
-  data:
+  wordpress:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/adamiens/data'
+      device: '/home/adamiens/data/wordpress'
+  db:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/adamiens/data/db'
 networks:
         docker-network:
                 driver: bridge

@@ -1,8 +1,10 @@
-NAME	=	inception
+NAME	:=	inception
 
-IMAGES	=	wordpress nginx alpine:3.16
+IMAGES	:=	wordpress nginx alpine:3.16
 
-CONTAINERS =	wordpress_container nginx_container
+CONTAINERS :=	wordpress_container nginx_container mariadb_container
+
+SHELL	:= /bin/bash
 
 all:	${NAME}
 
@@ -12,7 +14,10 @@ ${NAME} : build
 build:
 	docker build srcs/requirements/wordpress -t wordpress
 	docker build srcs/requirements/nginx -t nginx
-	docker-compose -f srcs/docker-compose.yml up --detach
+	docker build srcs/requirements/mariadb -t mariadb
+	set -a
+	source srcs/.env
+	docker-compose  -f srcs/docker-compose.yml up -d
 
 clean:
 	docker stop ${CONTAINERS}
