@@ -14,6 +14,8 @@ services:
                         - wordpress
                 networks:
                         - docker-network
+                env_file:
+                        - .env 
                 restart: always
         wordpress:
                 build:
@@ -25,6 +27,8 @@ services:
                         - wordpress:/volume
                 networks:
                         - docker-network
+                env_file:
+                        - .env 
                 restart: always
         mariadb:
                 build:
@@ -38,10 +42,8 @@ services:
                         - db:/volume
                 networks:
                         - docker-network
-                environment:
-                        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-                        MYSQL_USER: ${MYSQL_USER}
-                        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+                env_file:
+                        - .env 
                 restart: always
 volumes:
   wordpress:
