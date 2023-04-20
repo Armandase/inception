@@ -5,5 +5,5 @@ socket=/var/run/mysql/mysql.sock
 bind-address=0.0.0.0
 datadir=/volume
 skip_networking=true 
-disable-log-bin = 1
-skip-name-resolve = 1
+skip-name-resolve
+#init-file=/init.sql

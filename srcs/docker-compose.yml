@@ -44,6 +44,8 @@ services:
                         - docker-network
                 env_file:
                         - .env 
+                environment:
+                        - DB_NAME=${DB_NAME}
                 restart: always
 volumes:
   wordpress:
