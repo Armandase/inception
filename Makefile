@@ -10,10 +10,11 @@ ${NAME} : build
 
 
 build:
-	docker build srcs/requirements/wordpress -t wordpress
-	docker build srcs/requirements/nginx -t nginx
-	docker build srcs/requirements/mariadb -t mariadb
-	docker-compose  -f srcs/docker-compose.yml up -d
+	@docker build srcs/requirements/wordpress -t wordpress
+	@docker build srcs/requirements/nginx -t nginx
+	@docker build srcs/requirements/mariadb -t mariadb
+	@docker-compose -f srcs/docker-compose.yml up -d
+	docker ps
 
 clean:
 	docker stop ${CONTAINERS}

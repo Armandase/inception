@@ -1,9 +1,5 @@
 [mysqld]
 user=root
 port=3306
-socket=/var/run/mysql/mysql.sock
 bind-address=0.0.0.0
-datadir=/volume
-skip_networking=true 
 skip-name-resolve
-#init-file=/init.sql

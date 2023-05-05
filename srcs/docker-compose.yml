@@ -14,8 +14,6 @@ services:
                         - wordpress
                 networks:
                         - docker-network
-                env_file:
-                        - .env 
                 restart: always
         wordpress:
                 build:
@@ -23,8 +21,12 @@ services:
                         dockerfile: requirements/wordpress/Dockerfile 
                 image: wordpress
                 container_name: wordpress_container
+                ports:
+                        - "9000:9000"
                 volumes:
                         - wordpress:/volume
+                depends_on:
+                        - mariadb
                 networks:
                         - docker-network
                 env_file:
@@ -39,13 +41,11 @@ services:
                 ports:
                         - "3306:3306"
                 volumes:
-                        - db:/volume
+                        - "db:/volume"
+                env_file:
+                        - .env
                 networks:
                         - docker-network
-                env_file:
-                        - .env 
-                environment:
-                        - DB_NAME=${DB_NAME}
                 restart: always
 volumes:
   wordpress:
