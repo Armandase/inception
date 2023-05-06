@@ -1,11 +1,10 @@
 #!/bin/sh
-mysql_install_db --basedir=/volume --datadir=/volume --user=root --rpm > /dev/null
+mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=root --rpm > /dev/null
 
 echo "CREATE DATABASE IF NOT EXISTS $WP_DATABASE_NAME;
-GRANT ALL PRIVILEGES ON $WP_DATABASE_NAME.* TO $WP_DATABASE_USR IDENTIFIED BY $WP_DATABASE_PWD;
+GRANT ALL PRIVILEGES ON wordpress.* TO 'adamiens'@'%' IDENTIFIED BY 'password';
 FLUSH PRIVILEGES;" > /database
-
-/usr/bin/mysqld --user=root --bootstrap < /database
+/usr/bin/mysqld --user=root --init-file=/database
 
 rm /database
 
