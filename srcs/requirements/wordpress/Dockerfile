@@ -11,7 +11,7 @@ COPY	tools/wp-config	/volume/wordpress/wp-config.php
 COPY	tools/setup	/setup
 COPY	tools/php-fpm	/etc/php8/php-fpm.d/www.conf
 
-RUN	chmod +x /setup && sleep 3
+RUN	chmod +x /setup
 
 
 EXPOSE 9000:9000

@@ -9,8 +9,8 @@ curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.pha
 chmod +x wp-cli.phar &&\
 mv wp-cli.phar /usr/local/bin/wp
 
-#wp core install --path='/volume/wordpress' --url="${DOMAIN_NAME}" --title="Inception" --admin_user=${WP_ADMIN_NAME} --admin_password=${WP_ADMIN_PWD} --admin_email=${WP_ADMIN_EMAIL} --allow-root
+wp core install --path='/volume/wordpress' --url="${DOMAIN_NAME}" --title="Inception" --admin_user=${WP_ADMIN_NAME} --admin_password=${WP_ADMIN_PWD} --admin_email=${WP_ADMIN_EMAIL} --allow-root
 
-#wp user create --path='/volume/wordpress' ${WP_USER_NAME} ${WP_USER_EMAIL} --role=subscriber --user_pass=${WP_USER_PWD} --allow-root
+wp user create --path='/volume/wordpress' ${WP_USER_NAME} ${WP_USER_EMAIL} --role=subscriber --user_pass=${WP_USER_PWD} --allow-root
 
 exec php-fpm8 -FR

@@ -1,6 +1,6 @@
 NAME	:=	inception
 
-IMAGES	:=	wordpress nginx alpine:3.16
+IMAGES	:=	wordpress nginx mariadb alpine:3.16
 
 CONTAINERS :=	wordpress_container nginx_container mariadb_container
 

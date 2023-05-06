@@ -2,8 +2,7 @@ FROM alpine:3.16
 
 RUN	apk update && apk upgrade && \
 	apk add --no-cache mysql mysql-client && \
-	mkdir /volume
-RUN	mkdir -p /run/mysqld 
+	mkdir -p /run/mysqld 
 
 COPY tools/start.sh /start.sh
 COPY conf /etc/my.cnf
