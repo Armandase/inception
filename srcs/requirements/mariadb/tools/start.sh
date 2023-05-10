@@ -4,8 +4,10 @@ mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=root --rpm > /de
 echo "CREATE DATABASE IF NOT EXISTS $WP_DATABASE_NAME;
 GRANT ALL PRIVILEGES ON $WP_DATABASE_NAME.* TO 'database_user'@'%' IDENTIFIED BY 'database_pwd';
 FLUSH PRIVILEGES;" > /database
+
 sed -i "s|database_user|$WP_DATABASE_USR|g" /database
 sed -i "s|database_pwd|$WP_DATABASE_PWD|g" /database
+
 /usr/bin/mysqld --user=root --init-file=/database
 
 rm /database

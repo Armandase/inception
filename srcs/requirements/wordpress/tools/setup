@@ -1,16 +1,15 @@
 #! /bin/sh
 
-sed -i "s|database_name_here|${WP_DATABASE_NAME}|g" /volume/wordpress/wp-config.php && \
-sed -i "s|username_here|${WP_DATABASE_USR}|g" /volume/wordpress/wp-config.php && \
-sed -i "s|password_here|${WP_DATABASE_PWD}|g" /volume/wordpress/wp-config.php
-sed -i "s|localhost|mariadb|g" /volume/wordpress/wp-config.php
-
-curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar &&\
-chmod +x wp-cli.phar &&\
+curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+chmod +x wp-cli.phar
 mv wp-cli.phar /usr/local/bin/wp
 
-wp core install --path='/volume/wordpress' --url="${DOMAIN_NAME}" --title="Inception" --admin_user=${WP_ADMIN_NAME} --admin_password=${WP_ADMIN_PWD} --admin_email=${WP_ADMIN_EMAIL} --allow-root
+wp core download --path='/volume/wordpress/'
 
-wp user create --path='/volume/wordpress' ${WP_USER_NAME} ${WP_USER_EMAIL} --role=subscriber --user_pass=${WP_USER_PWD} --allow-root
+wp config create --path='/volume/wordpress/' --dbname=${WP_DATABASE_NAME} --dbuser=${WP_DATABASE_USR} --dbpass=${WP_DATABASE_PWD} --dbhost=mariadb
 
-exec php-fpm8 -FR
+wp core install --path='/volume/wordpress' --url="${DOMAIN_NAME}" --title="Inception" --admin_user=${WP_ADMIN_NAME} --admin_password=${WP_ADMIN_PWD} --admin_email=${WP_ADMIN_EMAIL} --skip-email
+
+wp user create --path='/volume/wordpress' ${WP_USER_NAME} ${WP_USER_EMAIL} --role=subscriber --user_pass=${WP_USER_PWD}
+
+exec php-fpm8 -F
