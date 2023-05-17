@@ -10,6 +10,8 @@ services:
                         - wordpress:/volume
                 depends_on:
                         - wordpress
+                env_file:
+                        - .env 
                 networks:
                         - docker-network
                 restart: always
