@@ -12,4 +12,12 @@ wp core install --path='/volume/wordpress' --url="${DOMAIN_NAME}" --title="Incep
 
 wp user create --path='/volume/wordpress' ${WP_USER_NAME} ${WP_USER_EMAIL} --role=subscriber --user_pass=${WP_USER_PWD}
 
+wp config --path='/volume/wordpress' set WP_REDIS_HOST "redis"
+
+wp config --path='/volume/wordpress' set WP_REDISPORT "6379"
+
+wp config --path='/volume/wordpress'  set WP_CACHE "true"
+
+#wp config --path='/volume/wordpress' set WP_CACHE_KEY_SALT "${DOMAIN_NAME}"
+
 exec php-fpm8 -F

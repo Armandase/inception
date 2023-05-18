@@ -1,7 +1,8 @@
 FROM	debian:buster-slim
 
-RUN	apt update && apt upgrade && \
+RUN	apt-get update && apt-get upgrade -y && \
+	apt-get install redis-server -y
 
-EXPOSE 443
+EXPOSE 6379
 
-CMD ["sh", "/setup.sh"]
+CMD ["redis-server"]
