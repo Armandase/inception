@@ -1,8 +1,7 @@
 FROM	debian:buster-slim
 
 RUN	apt-get update && apt-get upgrade -y && \
-	apt-get install redis-server -y
-RUN	mkdir -p /data
+	apt-get install vsftpd -y
 
 EXPOSE 6379
 

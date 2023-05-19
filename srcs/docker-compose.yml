@@ -54,6 +54,18 @@ services:
                 ports:
                         - "6379:6379"
                 restart: always
+
+        ftp-server:
+                build: requirements/bonus/ftp-server
+                image: ftp-server
+                container_name: ftp-server_container
+                depends_on:
+                        - wordpress
+                volumes:
+                        - shared:/shared
+                ports:
+                        - "21:21"
+                restart: always
 volumes:
   wordpress:
     driver: local
