@@ -1,6 +1,6 @@
 NAME	:=	inception
 
-IMAGES	:=	wordpress nginx mariadb redis alpine:3.16
+IMAGES	:=	wordpress nginx mariadb redis
 
 CONTAINERS :=	wordpress_container nginx_container mariadb_container redis_container
 
@@ -13,19 +13,21 @@ build:
 	docker ps
 
 stop:
-	docket-compose -f srcs/docker-compose.yml stop
+	docker-compose -f srcs/docker-compose.yml stop
 
-clean: ${stop} ${clean_volumes}
-	docker rm -f ${CONTAINERS}
-	docker rmi -f ${IMAGES}
-	docker volume rm -f `docker volume ls`
+down:
 	docker-compose -f srcs/docker-compose.yml down
 
+clean: ${stop} ${down} ${clean_volumes}
+	@docker rm -f ${CONTAINERS}
+	@docker rmi -f ${IMAGES}
+	@docker volume rm -f `docker volume ls`
+
 clean_volumes:
-	sudo rm -rf /home/armand/data/wordpress/*
-	sudo rm -rf /home/armand/data/cache/*
-	sudo rm -rf /home/armand/data/db/*
+	@sudo rm -rf /home/adamiens/data/wordpress/*
+	@sudo rm -rf /home/adamiens/data/cache/*
+	@sudo rm -rf /home/adamiens/data/db/*
 
-re: clean all
+re: clean clean_volumes all
 
-.PHONY: all clean re build
+.PHONY: all clean re build stop down clean_volumes

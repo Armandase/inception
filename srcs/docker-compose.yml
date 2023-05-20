@@ -19,8 +19,6 @@ services:
                 build: requirements/wordpress/
                 image: wordpress
                 container_name: wordpress_container
-                ports:
-                        - "9000:9000"
                 volumes:
                         - wordpress:/volume
                 depends_on:
@@ -34,8 +32,6 @@ services:
                 build: requirements/mariadb/
                 image: mariadb
                 container_name: mariadb_container
-                ports:
-                        - "3306:3306"
                 volumes:
                         - "db:/var/lib/mysql"
                 env_file:
@@ -44,47 +40,41 @@ services:
                         - docker-network
                 restart: always
         redis:
-                build: requirements/bonus/redis
+                build: requirements/bonus/redis/
                 image: redis
                 container_name: redis_container
-                volumes:
-                        - cache:/data
-                depends_on:
-                        - wordpress
                 ports:
                         - "6379:6379"
-                restart: always
-
-        ftp-server:
-                build: requirements/bonus/ftp-server
-                image: ftp-server
-                container_name: ftp-server_container
                 depends_on:
                         - wordpress
-                volumes:
-                        - shared:/shared
-                ports:
-                        - "21:21"
+                networks:
+                        - docker-network
                 restart: always
+
+                #ftp-server:
+                #build: requirements/bonus/ftp-server
+                #image: ftp-server
+                #container_name: ftp-server_container
+                #depends_on:
+                #        - wordpress
+                #volumes:
+                #        - shared:/shared
+                #ports:
+                #        - "21:21"
+                #restart: always
 volumes:
   wordpress:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/armand/data/wordpress'
+      device: '/home/adamiens/data/wordpress'
   db:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/armand/data/db'
-  cache:
-    driver: local
-    driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: '/home/armand/data/cache'
+      device: '/home/adamiens/data/db'
 networks:
         docker-network:
                 driver: bridge

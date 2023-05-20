@@ -9,6 +9,4 @@ COPY	conf	/etc/nginx/http.d/default.conf
 
 COPY	tools/setup.sh	/setup.sh
 
-EXPOSE 443
-
 CMD ["sh", "/setup.sh"]
