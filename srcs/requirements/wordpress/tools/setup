@@ -11,12 +11,21 @@ wp core install --path='/volume/wordpress' --url="${DOMAIN_NAME}" --title="Incep
 
 wp user create --path='/volume/wordpress' ${WP_USER_NAME} ${WP_USER_EMAIL} --role=subscriber --user_pass=${WP_USER_PWD} --allow-root
 
-wp config --path='/volume/wordpress' set WP_REDIS_HOST "redis_container" --allow-root
-wp config --path='/volume/wordpress' set WP_REDIS_PORT --raw "6379" --allow-root
-wp config --path='/volume/wordpress' set WP_CACHE --raw "true" --allow-root
+wp config --path='/volume/wordpress' set WP_REDIS_HOST "redis" 
+wp config --path='/volume/wordpress' set WP_REDIS_PORT --raw "6379"
+wp config --path='/volume/wordpress' set WP_CACHE --raw "true"
+#wp config --path='/volume/wordpress' set WP_REDIS_CLIENT "redis"
+#wp config --path='/volume/wordpress' set WP_REDIS_TIMEOUT --raw "1"
+#wp config --path='/volume/wordpress' set WP_REDIS_READ_TIMEOUT --raw "1"
+#wp config --path='/volume/wordpress' set WP_REDIS_DATABASE --raw "0"
+#wp config --path='/volume/wordpress' set WP_CACHE_KEY_SALT "redis"
+#echo "define('WP_CACHE', true);" >> /volume/wordpress/wp-config.php
+#echo "define('WP_REDIS_HOST', 'redis');" >> /volume/wordpress/wp-config.php
+#echo "define('WP_REDIS_PORT', '6379');" >> /volume/wordpress/wp-config.php
 
 wp --path='/volume/wordpress' plugin install redis-cache --activate --allow-root
 wp --path='/volume/wordpress' plugin update --all --allow-root
-wp --path='/volume/wordpress' redis enable --allow-root
+#wp --path='/volume/wordpress' redis enable --allow-#root
 
-exec php-fpm8 --nodaemonize --allow-to-run-as-root
+#exec php-fpm8 --nodaemonize --allow-to-run-as-root
+exec php-fpm8 -FR

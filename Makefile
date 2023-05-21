@@ -18,16 +18,16 @@ build_images:
 	docker image ls
 
 build:
-	@docker-compose -f ${PATH_DOCKERCOMPOSE} up -d
+	@docker-compose -f ${PATH_DOCKERCOMPOSE} up -d --build
 	docker ps
 
 stop:
-	docker-compose -f ${PATH_DOCKERCOMPOSE} stop
+	@docker-compose -f ${PATH_DOCKERCOMPOSE} stop
 
 down:
-	docker-compose -f ${PATH_DOCKERCOMPOSE} down -v
+	@docker-compose -f ${PATH_DOCKERCOMPOSE} down -v
 
-clean: ${stop} ${down} ${clean_volumes}
+clean: ${down} ${stop} ${clean_volumes}
 	@docker rm -f ${CONTAINERS}
 	@docker rmi -f ${IMAGES}
 	@docker volume rm -f `docker volume ls`

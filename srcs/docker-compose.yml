@@ -23,6 +23,7 @@ services:
                         - wordpress:/volume
                 depends_on:
                         - mariadb
+                        - redis
                 networks:
                         - docker-network
                 env_file:
@@ -43,10 +44,6 @@ services:
                 build: requirements/bonus/redis/
                 image: redis
                 container_name: redis_container
-                ports:
-                        - "6379:6379"
-                depends_on:
-                        - wordpress
                 networks:
                         - docker-network
                 restart: always
