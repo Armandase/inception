@@ -23,7 +23,6 @@ services:
                         - wordpress:/volume
                 depends_on:
                         - mariadb
-                        - redis
                 networks:
                         - docker-network
                 env_file:
@@ -44,6 +43,10 @@ services:
                 build: requirements/bonus/redis/
                 image: redis
                 container_name: redis_container
+                depends_on:
+                        - wordpress
+                volumes:
+                  - wordpress:/var/www/html
                 networks:
                         - docker-network
                 restart: always
@@ -65,13 +68,13 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/adamiens/data/wordpress'
+      device: '/home/armand/data/wordpress'
   db:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/adamiens/data/db'
+      device: '/home/armand/data/db'
 networks:
         docker-network:
                 driver: bridge

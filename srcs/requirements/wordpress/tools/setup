@@ -1,31 +1,38 @@
 #! /bin/sh
+
+#work dir dans le volume paratage
+
+if [ ! -f "/volume/wordpress/wp-confif.php" ]; then
+
 curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 chmod +x wp-cli.phar
 mv wp-cli.phar /usr/local/bin/wp
 
 wp core download --path='/volume/wordpress/' --allow-root
 
-wp config create --path='/volume/wordpress/' --dbname=${WP_DATABASE_NAME} --dbuser=${WP_DATABASE_USR} --dbpass=${WP_DATABASE_PWD} --dbhost=mariadb --allow-root
+#rm /volume/wordpress/wp-config-sample.php
+
+wp config create --path='/volume/wordpress/' --dbname=${WP_DATABASE_NAME} --dbuser=${WP_DATABASE_USR} --dbpass=${WP_DATABASE_PWD} --dbhost=mariadb --extra-php --allow-root
+
+wp config --path='/volume/wordpress' set WP_REDIS_HOST "redis" --allow-root 
+wp config --path='/volume/wordpress' set WP_REDIS_PORT --raw "6379" --allow-root 
 
 wp core install --path='/volume/wordpress' --url="${DOMAIN_NAME}" --title="Inception" --admin_user=${WP_ADMIN_NAME} --admin_password=${WP_ADMIN_PWD} --admin_email=${WP_ADMIN_EMAIL} --skip-email --allow-root
 
-wp user create --path='/volume/wordpress' ${WP_USER_NAME} ${WP_USER_EMAIL} --role=subscriber --user_pass=${WP_USER_PWD} --allow-root
+#wp user create --path='/volume/wordpress' ${WP_USER_NAME} ${WP_USER_EMAIL} --role=subscriber --user_pass=${WP_USER_PWD} --allow-root
 
-wp config --path='/volume/wordpress' set WP_REDIS_HOST "redis" 
-wp config --path='/volume/wordpress' set WP_REDIS_PORT --raw "6379"
-wp config --path='/volume/wordpress' set WP_CACHE --raw "true"
-#wp config --path='/volume/wordpress' set WP_REDIS_CLIENT "redis"
+#wp config --path='/volume/wordpress' set WP_CACHE --raw "true" --allow-root 
 #wp config --path='/volume/wordpress' set WP_REDIS_TIMEOUT --raw "1"
 #wp config --path='/volume/wordpress' set WP_REDIS_READ_TIMEOUT --raw "1"
 #wp config --path='/volume/wordpress' set WP_REDIS_DATABASE --raw "0"
 #wp config --path='/volume/wordpress' set WP_CACHE_KEY_SALT "redis"
-#echo "define('WP_CACHE', true);" >> /volume/wordpress/wp-config.php
-#echo "define('WP_REDIS_HOST', 'redis');" >> /volume/wordpress/wp-config.php
-#echo "define('WP_REDIS_PORT', '6379');" >> /volume/wordpress/wp-config.php
 
 wp --path='/volume/wordpress' plugin install redis-cache --activate --allow-root
 wp --path='/volume/wordpress' plugin update --all --allow-root
-#wp --path='/volume/wordpress' redis enable --allow-#root
+#mkdir /run/php
+wp --path='/volume/wordpress' redis enable --allow-root
 
-#exec php-fpm8 --nodaemonize --allow-to-run-as-root
-exec php-fpm8 -FR
+fi
+
+php-fpm8 -F --allow-to-run-as-root
+#/usr/sbin/php-fpm8 -F
