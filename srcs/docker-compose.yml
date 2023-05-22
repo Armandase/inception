@@ -7,7 +7,7 @@ services:
                 ports:
                         - "443:443"
                 volumes:
-                        - wordpress:/volume
+                        - wordpress:/var/www/html
                 depends_on:
                         - wordpress
                 env_file:
@@ -20,10 +20,9 @@ services:
                 image: wordpress
                 container_name: wordpress_container
                 volumes:
-                        - wordpress:/volume
+                        - wordpress:/var/www/html
                 depends_on:
                         - mariadb
-                        - redis
                 networks:
                         - docker-network
                 env_file:
@@ -44,6 +43,12 @@ services:
                 build: requirements/bonus/redis/
                 image: redis
                 container_name: redis_container
+                ports:
+                        - "6379:6379"
+                volumes:
+                        - wordpress:/var/www/html
+                depends_on:
+                        - wordpress
                 networks:
                         - docker-network
                 restart: always
