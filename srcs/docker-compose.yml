@@ -48,17 +48,19 @@ services:
                         - docker-network
                 restart: always
 
-                #ftp-server:
-                #build: requirements/bonus/ftp-server
-                #image: ftp-server
-                #container_name: ftp-server_container
-                #depends_on:
-                #        - wordpress
-                #volumes:
-                #        - shared:/shared
-                #ports:
-                #        - "21:21"
-                #restart: always
+        ftp-server:
+                build: requirements/bonus/ftp-server
+                image: ftp-server
+                container_name: ftp-server
+                depends_on:
+                        - wordpress
+                volumes:
+                        - wordpress:/var/www/html
+                ports:
+                        - "21:21"
+                        - "20:20"
+                        - 21100-21110:21100-21110
+                restart: always
 volumes:
   wordpress:
     driver: local
