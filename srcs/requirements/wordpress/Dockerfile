@@ -17,7 +17,8 @@ RUN	apk update && apk upgrade && \
 	php-openssl \
 	php-xml \
 	php-zip \
-	php-tokenizer
+	php-tokenizer \
+	lftp
 
 COPY	tools/setup	/setup
 

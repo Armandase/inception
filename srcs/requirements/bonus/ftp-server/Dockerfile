@@ -2,10 +2,12 @@ FROM	debian:buster-slim
 
 RUN	apt-get update && apt-get upgrade -y && \
 	apt-get install vsftpd -y
-RUN	cp /etc/vsftpd.conf /etc/vsftpd.conf.orig
 
 COPY	conf /etc/vsftpd/vsftpd.conf
+COPY tools/start.sh /start.sh
 
-EXPOSE 20 21
+RUN chmod +x /start.sh
 
-CMD ["vsftpd", "/etc/vsftpd/vsftpd.conf"]
+EXPOSE 20 21 21100-21110:21100-21110
+
+CMD ["sh", "/start.sh"]
