@@ -1,23 +1,23 @@
 FROM alpine:3.16
 
 RUN	apk update && apk upgrade && \
-	apk add --no-cache\
-		php8 \
-	    php8-phar \
-	    php8-fpm \
-	    php8-mysqli \
-	    php8-json \
-	    php8-curl \
-	    php8-dom \
-	    php8-xml \
-	    php8-iconv \
-	    php8-xmlreader \
-	    php8-xmlwriter \
-	    php8-tokenizer \
-	    php8-simplexml \
-	    mariadb-client \
-	    netcat-openbsd \
-	    curl
+	apk add --no-cache \
+	php \
+	php-phar \
+	php-fpm \
+	php-mysqli \
+	php-iconv \
+	mysql-client \
+	php-json \
+	php-curl \
+	php-dom \
+	php-exif \
+	php-fileinfo \
+	php-mbstring \
+	php-openssl \
+	php-xml \
+	php-zip \
+	php-tokenizer
 
 COPY	tools/setup	/setup
 

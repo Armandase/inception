@@ -1,37 +1,25 @@
 #! /bin/sh
 
-#work dir dans le volume paratage
+#Wordpress installation
+wget https://wordpress.org/wordpress-6.2.2.tar.gz -O latest.tar.gz && \
+tar xzf latest.tar.gz && rm latest.tar.gz
 
-if [ ! -f "/volume/wordpress/wp-confif.php" ]; then
-
-curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+#Wp-cli installation
+wget -O wp-cli.phar https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 chmod +x wp-cli.phar
 mv wp-cli.phar /usr/local/bin/wp
 
-wp core download --allow-root
+cd wordpress
+#Database configuration
+wp config create --dbname=${WP_DATABASE_NAME} --dbuser=${WP_DATABASE_USR} --dbpass=${WP_DATABASE_PWD} --dbhost=mariadb
 
-wp config create --dbname=${WP_DATABASE_NAME} --dbuser=${WP_DATABASE_USR} --dbpass=${WP_DATABASE_PWD} --dbhost=mariadb --extra-php --allow-root
-rm /volume/wordpress/wp-config-sample.php
+wp core install --url="${DOMAIN_NAME}" --title="Inception" --admin_user=${WP_ADMIN_NAME} --admin_password=${WP_ADMIN_PWD} --admin_email=${WP_ADMIN_EMAIL} --skip-email
 
-wp config create --path='/volume/wordpress/' --dbname=${WP_DATABASE_NAME} --dbuser=${WP_DATABASE_USR} --dbpass=${WP_DATABASE_PWD} --dbhost=mariadb --extra-php --allow-root
+wp user create ${WP_USER_NAME} ${WP_USER_EMAIL} --role=subscriber --user_pass=${WP_USER_PWD}
 
-wp config --path='/volume/wordpress' set WP_REDIS_HOST "redis" --allow-root 
-wp config --path='/volume/wordpress' set WP_REDIS_PORT --raw "6379" --allow-root 
+#Redis installation
+wp  plugin install redis-cache --activate
+wp config set WP_REDIS_HOST "redis"
+wp  redis enable --force
 
-wp core install --url="${DOMAIN_NAME}" --title="Inception" --admin_user=${WP_ADMIN_NAME} --admin_password=${WP_ADMIN_PWD} --admin_email=${WP_ADMIN_EMAIL} --skip-email --allow-root
-
-wp user create ${WP_USER_NAME} ${WP_USER_EMAIL} --role=subscriber --user_pass=${WP_USER_PWD} --allow-root
-#wp config set WP_REDIS_TIMEOUT '1' --allow-root
-#wp config set WP_REDIS_READ_TIMEOUT '1' --allow-root
-#wp config set WP_REDIS_DATABASE '0' --allow-root
-#wp config set WP_REDIS_DISABLED 'fasle' --allow-root
-#wp config set WP_CACHE_KEY_SALT 'redis' --allow-root
-#wp config set WP_REDIS_CLIENT 'phpRedis' --allow-root
-#wp config  set WP_CACHE_KEY_SALT "redis"
-#wp config  set WP_REDIS_CLIENT "phpredis"
-
-wp  plugin install redis-cache --activate --allow-root
-wp  plugin update --all --allow-root
-wp  redis enable --force --allow-root
-
-php-fpm8 -F --allow-to-run-as-root
+exec php-fpm8 -F

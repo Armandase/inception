@@ -1,8 +1,8 @@
 NAME	:=	inception
 
-IMAGES	:=	wordpress nginx mariadb redis
+IMAGES	:=	wordpress nginx mariadb redis alpine:3.16
 
-CONTAINERS :=	wordpress_container nginx_container mariadb_container redis_container
+CONTAINERS :=	wordpress nginx mariadb redis
 
 PATH_DOCKERCOMPOSE :=	srcs/docker-compose.yml
 
@@ -27,7 +27,7 @@ stop:
 down:
 	@docker-compose -f ${PATH_DOCKERCOMPOSE} down -v
 
-clean: ${down} ${stop} ${clean_volumes}
+clean: down stop clean_volumes
 	@docker rm -f ${CONTAINERS}
 	@docker rmi -f ${IMAGES}
 	@docker volume rm -f `docker volume ls`
