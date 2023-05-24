@@ -1,6 +1,11 @@
 #!/bin/sh
 
-useradd -m $FTP_NAME
-usermod --password $FTP_PWD $FTP_NAME
+adduser --disabled-password $FTP_NAME
+echo "${FTP_NAME}":"${FTP_PWD}" | chpasswd
+usermod --home /wordpress $FTP_NAME
 
-/usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+echo "$FTP_NAME" > /etc/vsftpd/vsftpd.userlist
+
+chown $FTP_NAME:$FTP_NAME /wordpress
+
+exec vsftpd /etc/vsftpd/vsftpd.conf

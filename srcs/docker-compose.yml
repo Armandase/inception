@@ -52,14 +52,14 @@ services:
                 build: requirements/bonus/ftp-server
                 image: ftp-server
                 container_name: ftp-server
-                depends_on:
-                        - wordpress
+                  #depends_on:
+                  #     - wordpress
                 volumes:
-                        - wordpress:/var/www/html
+                        - wordpress:/wordpress
                 ports:
                         - "21:21"
                         - "20:20"
-                        - 21100-21110:21100-21110
+                        - "21100-21110:21100-21110"
                 env_file:
                         - .env
                 networks:
@@ -71,13 +71,13 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/armand/data/wordpress'
+      device: '/home/adamiens/data/wordpress'
   db:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/armand/data/db'
+      device: '/home/adamiens/data/db'
 networks:
         docker-network:
                 driver: bridge

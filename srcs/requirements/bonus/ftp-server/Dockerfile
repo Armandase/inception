@@ -1,13 +1,12 @@
-FROM	debian:buster-slim
+FROM	alpine:3.16
 
-RUN	apt-get update && apt-get upgrade -y && \
-	apt-get install vsftpd -y
+RUN	apk -U upgrade  && \
+	apk add vsftpd shadow lftp
+
+RUN	mkdir -p /wordpress
 
 COPY	conf /etc/vsftpd/vsftpd.conf
-COPY tools/start.sh /start.sh
 
-RUN chmod +x /start.sh
-
-EXPOSE 20 21 21100-21110:21100-21110
+COPY	tools/start.sh /start.sh
 
 CMD ["sh", "/start.sh"]

@@ -1,14 +1,32 @@
+#Connection message
+ftpd_banner=Welcome to vsftpd
+
 listen=YES
+#disable anon connection
 anonymous_enable=NO
+#for local user
 local_enable=YES
 write_enable=YES
-local_umask=022
 dirmessage_enable=YES
-use_localtime=YES
-xferlog_enable=YES
+
+#Use port 20 for have more privilege
 connect_from_port_20=YES
-xferlog_std_format=YES
+
+#enable whitelist
+userlist_enable=YES
+userlist_deny=NO
+userlist_file=/etc/vsftpd/vsftpd.userlist
+
+#Create log file for uploads and downloads
+xferlog_enable=YES
+
+#local users will be placed in a chroot
 chroot_local_user=YES
-chroot_list_enable=YES
-chroot_list_file=/etc/vsftpd/chroot_list
-pam_service_name=vsftpd_virtual
+allow_writeable_chroot=YES
+
+#Solve 500 OOPS: priv_sock_get_cmd
+seccomp_sandbox=NO
+
+#Set the pasv plage
+pasv_min_port=21100
+pasv_max_port=21110
