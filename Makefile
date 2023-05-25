@@ -1,8 +1,8 @@
 NAME	:=	inception
 
-IMAGES	:=	wordpress nginx mariadb redis alpine:3.16
+IMAGES	:=	wordpress nginx mariadb redis adminer alpine:3.16
 
-CONTAINERS :=	wordpress nginx mariadb redis
+CONTAINERS :=	wordpress nginx mariadb redis adminer
 
 PATH_DOCKERCOMPOSE :=	srcs/docker-compose.yml
 
@@ -34,8 +34,8 @@ clean: down stop clean_volumes
 
 clean_volumes:
 	@sudo rm -rf ${PATH_DATA}/wordpress/*
-	@sudo rm -rf ${PATH_DATA}/cache/*
 	@sudo rm -rf ${PATH_DATA}/db/*
+	@sudo rm -rf ${PATH_DATA}/adminer/*
 
 prune:
 	docker container prune -f

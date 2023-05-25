@@ -19,6 +19,7 @@ wp user create ${WP_USER_NAME} ${WP_USER_EMAIL} --role=subscriber --user_pass=${
 
 #Redis installation
 wp  plugin install redis-cache --activate
+wp theme install bizboost --activate
 wp config set WP_REDIS_HOST "redis"
 wp  redis enable --force
 

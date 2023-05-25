@@ -1,0 +1,13 @@
+[www]
+
+user = nobody
+group = nobody
+listen = 8080
+
+pm = dynamic
+pm.max_children = 75
+pm.start_servers = 10
+pm.min_spare_servers = 5
+pm.max_spare_servers = 20
+pm.max_requests = 200
+clear_env = no

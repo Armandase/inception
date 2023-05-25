@@ -8,6 +8,7 @@ services:
                         - "443:443"
                 volumes:
                         - wordpress:/var/www/html
+                        - adminer:/var/www/adminer
                 depends_on:
                         - wordpress
                 env_file:
@@ -52,8 +53,8 @@ services:
                 build: requirements/bonus/ftp-server
                 image: ftp-server
                 container_name: ftp-server
-                  #depends_on:
-                  #     - wordpress
+                depends_on:
+                        - wordpress
                 volumes:
                         - wordpress:/wordpress
                 ports:
@@ -62,6 +63,17 @@ services:
                         - "21100-21110:21100-21110"
                 env_file:
                         - .env
+                networks:
+                        - docker-network
+                restart: always
+        adminer:
+                build: requirements/bonus/adminer
+                image: adminer
+                container_name: adminer
+                depends_on:
+                        - wordpress
+                volumes:
+                        - adminer:/var/www/adminer
                 networks:
                         - docker-network
                 restart: always
@@ -78,6 +90,12 @@ volumes:
       type: 'none'
       o: 'bind'
       device: '/home/adamiens/data/db'
+  adminer:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/adamiens/data/adminer'
 networks:
         docker-network:
                 driver: bridge
