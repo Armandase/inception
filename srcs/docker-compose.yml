@@ -77,6 +77,15 @@ services:
                 networks:
                         - docker-network
                 restart: always
+        static:
+                build: requirements/bonus/static
+                image: static
+                container_name: static
+                depends_on:
+                        - wordpress
+                volumes:
+                        - wordpress:/wordpress
+                restart: on-failure
 volumes:
   wordpress:
     driver: local

@@ -1,8 +1,8 @@
 NAME	:=	inception
 
-IMAGES	:=	wordpress nginx mariadb redis adminer alpine:3.16
+IMAGES	:=	wordpress nginx mariadb redis adminer static alpine:3.16
 
-CONTAINERS :=	wordpress nginx mariadb redis adminer
+CONTAINERS :=	wordpress nginx mariadb redis adminer static
 
 PATH_DOCKERCOMPOSE :=	srcs/docker-compose.yml
 
