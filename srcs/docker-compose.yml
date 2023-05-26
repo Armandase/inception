@@ -86,25 +86,34 @@ services:
                 volumes:
                         - wordpress:/wordpress
                 restart: on-failure
+        cadvisor:
+                build: requirements/bonus/cadvisor
+                image: cadvisor
+                container_name: cadvisor
+                networks:
+                        - docker-network
+                ports:
+                        - "8080:8080"
+                restart: always
 volumes:
   wordpress:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/adamiens/data/wordpress'
+      device: '/home/armand/data/wordpress'
   db:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/adamiens/data/db'
+      device: '/home/armand/data/db'
   adminer:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/adamiens/data/adminer'
+      device: '/home/armand/data/adminer'
 networks:
         docker-network:
                 driver: bridge

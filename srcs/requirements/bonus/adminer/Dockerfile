@@ -32,6 +32,9 @@ RUN	chmod 755 /var/www/adminer/index.php
 
 COPY	php-conf /etc/php8/php-fpm.d/www.conf
 
-EXPOSE	8080
+EXPOSE	4242
 
 CMD [ "php-fpm8", "--nodaemonize", "--allow-to-run-as-root"]
+#for log to adminer:
+#server: mariadb
+#username: adamiens

@@ -6,7 +6,7 @@ CONTAINERS :=	wordpress nginx mariadb redis adminer static
 
 PATH_DOCKERCOMPOSE :=	srcs/docker-compose.yml
 
-PATH_DATA :=	/home/adamiens/data
+PATH_DATA :=	/home/armand/data
 
 all:	${NAME}
 
