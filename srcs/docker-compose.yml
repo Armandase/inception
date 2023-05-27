@@ -101,19 +101,19 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/armand/data/wordpress'
+      device: '/home/adamiens/data/wordpress'
   db:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/armand/data/db'
+      device: '/home/adamiens/data/db'
   adminer:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/armand/data/adminer'
+      device: '/home/adamiens/data/adminer'
 networks:
         docker-network:
                 driver: bridge
