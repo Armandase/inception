@@ -20,12 +20,14 @@ RUN	apk update && apk upgrade && \
 	php-tokenizer \
 	lftp
 
-COPY	tools/setup	/setup
-
+#php-fpm configuration
 COPY	tools/php-fpm	/etc/php8/php-fpm.d/www.conf
+
+COPY	tools/setup	/setup
 
 RUN	chmod +x /setup
 
+#Workdir in shared volume
 WORKDIR /var/www/html
 
 CMD ["sh", "/setup"]

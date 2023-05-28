@@ -23,4 +23,5 @@ wp theme install bizboost --activate
 wp config set WP_REDIS_HOST "redis"
 wp  redis enable --force
 
+#execute php in a foreground
 exec php-fpm8 -F

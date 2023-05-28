@@ -6,6 +6,7 @@ RUN	apk update && apk upgrade && \
 RUN	mkdir -p /var/www/html && \
 	mkdir -p /var/www/adminer
 
+#Remplace the default configuration
 COPY	conf	/etc/nginx/http.d/default.conf
 
 COPY	tools/setup.sh	/setup.sh
